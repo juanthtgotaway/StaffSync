@@ -10,13 +10,24 @@ const inquirer = require("inquirer");
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
+//connects to database
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'staffinfo_db'
+    },
+    console.log("Connected to staffinfo.")
+)
+
 //prompts being asked on landing
 const questions = () => {
     inquirer.prompt([
         {
             type: 'list',
             message: "What would you like to do?",
-            name:"navmenu",
+            name:"nav",
             choices: [
                 "View All Employees",
                 "Add Employee",

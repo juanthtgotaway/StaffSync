@@ -1,7 +1,7 @@
 DROP DATABASE IF EXIsTS staffInfo_db;
-CREATE DATABASE staffInfo_db;
+CREATE DATABASE staffinfo_db;
 
-USE staffInfo_db;
+USE staffinfo_db;
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -26,4 +26,6 @@ CREATE TABLE employee (
     manager_id INT AUTO_INCREMENT NULL,
     FOREIGN KEY (roles_id),
     REFERENCES roles(id),
+    FOREIGN KEY(manager_id)
+    REFERENCES employee(id)
 );
