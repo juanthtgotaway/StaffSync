@@ -42,12 +42,26 @@ function questions () {
 
         if (answer.nav === "View All Employees") {
             viewEmployees();
+        } 
+        
+        else if (answer.nav === "View All Roles"){
+            viewRoles();
         }
     });
 };
 
 function viewEmployees(){
     connection.query(`SELECT * FROM employee`, (err, result) => {
+        if (err) throw err;
+        console.table(result);
+        
+        questions();
+
+    });
+};
+
+function viewRoles(){
+    connection.query(`SELECT * FROM roles`, (err, result) => {
         if (err) throw err;
         console.table(result);
         
