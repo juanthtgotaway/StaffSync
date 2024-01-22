@@ -47,6 +47,10 @@ function questions () {
         else if (answer.nav === "Add Employee"){
             addEmployee();
         }
+
+        else if (answer.nav === "Update Employee Role"){
+            updateRole();
+        }
         
         else if (answer.nav === "View All Roles"){
             viewRoles();
@@ -117,11 +121,67 @@ function addEmployee() {
         connection.query(
             "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)", 
             [answers.first_name, answers.last_name, answers.role_id, answers.manager_id]);
+        console.log("New Employee Added.")
         console.table(answers);
-
+    
         questions();
         
       });
+}
+
+function updateRole() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'listofemployees',
+            message: "Select the employee who you would like to update their role.",
+            choices: [
+                'Tom Segura',
+                'Andrew Shultz',
+                'Joe Rogan',
+                'Joe DeRosa',
+                'Bobby Lee',
+                'Ari Shaffir',
+                'Sean Strickland',
+                'Ralph Barbosa',
+                'Deric Poston',
+                'Akaash Singh',
+                'Livingston Allen',
+                'Virgil Gazaca',
+                'Andrew Santino',
+                'Theo Von',
+            ],
+        },
+        {
+            type: 'list',
+            name: 'updatedRole',
+            message: "What will be the new role for this employee?",
+            choices: [
+                'Sales Manager',
+                'Sales Rep',
+                'Marketing Manager',
+                'Graphic Designer',
+                'Lawyer',
+                'Finance Manager',
+                'Lead Developer',
+                'Sr. Developer',
+                'Jr. Developer',
+                'Support Specialist',
+                'IT Director',
+                'IT Security Specialist',
+            ],
+        }
+    ])
+    .then((answers) => {
+        connection.query(
+            "INSERT INTO roles (first_name, last_name, role_id) VALUE (?, ?, ?)", 
+            [answers.first_name, answers.last_name, answers.role_id]);
+        console.log("Updated employees role");
+        console.table(answers);
+
+        questions();
+
+    })
 }
 
 function viewRoles(){
