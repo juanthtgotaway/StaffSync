@@ -1,28 +1,26 @@
 //required packages to run app
-const express = require('express');
-// const mysql = require('mysql2');
-const app = express();
 const inquirer = require("inquirer");
-//defines the dynamic port or use 3001 by default
-// const PORT = process.env.port || 3001;
-
-//middleware 
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+const mysql = require('mysql2');
 
 //connects to database
-const db = mysql.createConnection(
+const connection = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
         password: '',
         database: 'staffinfo_db'
     },
-    console.log("Connected to staffinfo.")
-)
+);
+
+connection.connect((err) => {
+    if (err) throw err;
+    console.log("Connected to staffinfo!");
+
+    questions();
+});
 
 //prompts being asked on landing
-const questions = () => {
+function questions () {
     inquirer.prompt([
         {
             type: 'list',
@@ -37,9 +35,23 @@ const questions = () => {
                 "View All Departments",
                 "Add Department",
             ],
-        },
+        }
     ])
+    //based on answers, function goes off to call that action
+    .then(function(answer) {
+
+        if (answer.nav === "View All Employees") {
+            viewEmployees();
+        }
+    });
 };
 
+function viewEmployees(){
+    connection.query(`SELECT * FROM employee`, (err, result) => {
+        if (err) throw err;
+        console.table(result);
+        
+        questions();
 
-questions();
+    });
+};
