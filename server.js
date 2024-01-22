@@ -55,6 +55,10 @@ function questions () {
         else if (answer.nav === "View All Roles"){
             viewRoles();
         }
+
+        else if (answer.nav === "Add Role"){
+            addRole();
+        }
         
         else if (answer.nav === "View All Departments") {
             viewDept();
@@ -193,6 +197,25 @@ function viewRoles(){
 
     });
 };
+
+function addRole(){
+    inquirer.prompt ([
+        {
+            type: 'input',
+            name: 'newRole',
+            message: "What is the name of th role you would like to add?"
+        }
+    ])
+    .then((answers) => {
+        connection.query(
+            "INSET INTO role (title) VALUES (?)", 
+            [answers.title]
+        );
+        console.table(answers);
+
+        questions();
+    })
+}
 
 function viewDept(){
     connection.query(`SELECT * FROM department`, (err, result) => {
