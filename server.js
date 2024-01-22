@@ -47,6 +47,10 @@ function questions () {
         else if (answer.nav === "View All Roles"){
             viewRoles();
         }
+
+        else if (answer.nav === "View All Departments") {
+            viewDept();
+        }
     });
 };
 
@@ -62,6 +66,16 @@ function viewEmployees(){
 
 function viewRoles(){
     connection.query(`SELECT * FROM roles`, (err, result) => {
+        if (err) throw err;
+        console.table(result);
+        
+        questions();
+
+    });
+};
+
+function viewDept(){
+    connection.query(`SELECT * FROM department`, (err, result) => {
         if (err) throw err;
         console.table(result);
         
