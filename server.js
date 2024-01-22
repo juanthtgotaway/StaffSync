@@ -60,8 +60,12 @@ function questions () {
             addRole();
         }
         
-        else if (answer.nav === "View All Departments") {
+        else if (answer.nav === "View All Departments"){
             viewDept();
+        }
+
+        else if (answer.nav === "Add Department"){
+            addDepartment();
         }
     });
 };
@@ -125,9 +129,7 @@ function addEmployee() {
         connection.query(
             "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)", 
             [answers.first_name, answers.last_name, answers.role_id, answers.manager_id]);
-        console.log("New Employee Added.")
-        console.table(answers);
-    
+        console.log("New Employee Added.")    
         questions();
         
       });
@@ -181,7 +183,6 @@ function updateRole() {
             "INSERT INTO roles (first_name, last_name, role_id) VALUE (?, ?, ?)", 
             [answers.first_name, answers.last_name, answers.role_id]);
         console.log("Updated employees role");
-        console.table(answers);
 
         questions();
 
@@ -204,14 +205,32 @@ function addRole(){
             type: 'input',
             name: 'newRole',
             message: "What is the name of th role you would like to add?"
-        }
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message:"What is the salary for this role?"
+        },
+        {
+            type: 'list',
+            name: 'department',
+            message: "What department does this role belong to?",
+            choices: [
+                'Sales',
+                'Marketing',
+                'Legal',
+                'Finance',
+                'Engineering',
+                'IT',
+            ],
+        },
     ])
     .then((answers) => {
         connection.query(
-            "INSET INTO role (title) VALUES (?)", 
-            [answers.title]
+            "INSET INTO role (title, salary, department_id) VALUES (?,?,?)", 
+            [answers.title, answers.salary, answers.department_id]
         );
-        console.table(answers);
+        console.log("New Role Added");
 
         questions();
     })
@@ -227,4 +246,22 @@ function viewDept(){
     });
 };
 
+function addDepartment() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'newDept',
+            message: "What is the name of the department you would like to add?"
+        },
+    ])
+    .then((answers) => {
+        connection.query(
+            "INSERT INTO department (name) VALUES (?)",
+            answers.name
+        );
+        console.log("New department added.");
+
+        questions();
+    })
+};
 
