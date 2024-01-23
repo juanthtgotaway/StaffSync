@@ -70,6 +70,7 @@ function questions () {
     });
 };
 
+//Function that calls to view employee 
 function viewEmployees(){
     connection.query(`SELECT * FROM employee`, (err, result) => {
         if (err) throw err;
@@ -80,6 +81,7 @@ function viewEmployees(){
     });
 };
 
+//Function that calls to add employee
 function addEmployee() {
     inquirer.prompt ([
         {
@@ -135,6 +137,7 @@ function addEmployee() {
       });
 }
 
+//Function that calls to update role
 function updateRole() {
     inquirer.prompt([
         {
@@ -189,6 +192,7 @@ function updateRole() {
     })
 }
 
+//function that calls to view roles 
 function viewRoles(){
     connection.query(`SELECT * FROM roles`, (err, result) => {
         if (err) throw err;
@@ -199,6 +203,7 @@ function viewRoles(){
     });
 };
 
+//function that calls to add a roll
 function addRole(){
     inquirer.prompt ([
         {
@@ -236,6 +241,7 @@ function addRole(){
     })
 }
 
+//function that calls to view a department
 function viewDept(){
     connection.query(`SELECT * FROM department`, (err, result) => {
         if (err) throw err;
@@ -246,6 +252,7 @@ function viewDept(){
     });
 };
 
+//function that calls to add a department 
 function addDepartment() {
     inquirer.prompt([
         {
